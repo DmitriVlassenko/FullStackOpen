@@ -15,16 +15,17 @@ const Display = ({good, neutral, bad}) => {
         )
 }
 
-const Statistics = ({all, average, positive}) => {
-    if (all) {
+const Statistics = (props) => {
+    if (props.all) {
         return (
             <div>
-                <h3> all = {all} <br/> average = {average} <br/> positive = {positive}%</h3>
+                <h3>Good = {props.good} <br/> Neutral = {props.neutral} <br/> Bad = {props.bad}</h3>
+                <h3>All = {props.all} <br/> Average = {props.average} <br/> Positive = {props.positive}%</h3>
             </div>
         )
     }
     else return (
-        <h3>all = {'0'} <br/> average = {'0'} <br/> positive = {'0'}</h3>
+        <h3>No feedback given</h3>
     )
 }
 
@@ -44,8 +45,7 @@ const App = () => {
             <Button handleClick={() => setNeutral(neutral + 1)} text={"Neutral"} />
             <Button handleClick={() => setBad(bad + 1)} text={"Bad"} />
             <h2>Statistics:</h2>
-            <Display good={good} neutral={neutral} bad={bad}/>
-            <Statistics all={all} average={average} positive={positive} />
+            <Statistics good={good} neutral={neutral} bad={bad} all={all} average={average} positive={positive} />
         </div>
     )
 }
