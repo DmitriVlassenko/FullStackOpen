@@ -1,29 +1,42 @@
 import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 
-const random = () => (Math.floor(Math.random() * anecdotes.length))
-
 const App = (props) => {
-    const [selected, setSelected] = useState(0)
+    const random = () => (Math.floor(Math.random() * anecdotes.length))
     const [vote, setVote] = useState(new Array(anecdotes.length).fill(0))
+    const [selected, setSelected] = useState(0)
+    const [best, setBest] = useState(0)
     const Votes = () => {
         const copy = [...vote]
         copy[selected] += 1
         setVote(copy)
-        console.log(copy)
+
+        if (copy[best] < copy[selected])
+            setBest(selected)
     }
 
     return (
         <div>
-            <h2>{props.anecdotes[selected]}</h2>
+            <h1>Anecdote of the day</h1>
+            <p>{props.anecdotes[selected]}</p>
             <Button onClick={() => setSelected(random)} />
-            <button onClick={Votes}>vote</button>
+            <button onClick={Votes}>Like</button>
+            <Best best={anecdotes[best]} likes={vote[best]}/>
+        </div>
+    )
+}
+
+const Best = ({best, likes}) => {
+    return (
+        <div>
+            <h2>Anecdote with most votes</h2>
+            <p>{best}</p>
+            <p>{likes} likes</p>
         </div>
     )
 }
 
 const Button = ({onClick}) => <button onClick={onClick}>next anecdote</button>
-
 
 const anecdotes = [
     'If it hurts, do it more often',
