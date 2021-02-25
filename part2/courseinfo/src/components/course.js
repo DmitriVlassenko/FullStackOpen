@@ -1,6 +1,7 @@
 const Course = ({ course }) => {
     return (
         <div>
+            <h1>Web development curriculum</h1>
             <Header name={course}/>
             <Content content={course} />
             <Total total={course}/>
@@ -8,7 +9,7 @@ const Course = ({ course }) => {
     )
 }
 
-const Header = ({name}) => <h1>{name.name}</h1>
+const Header = ({name}) => <h2>{name.name}</h2>
 
 const Content = ({content}) => {
     return (
