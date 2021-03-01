@@ -1,11 +1,21 @@
 import './App.css';
 import React, { useState } from "react";
-import Person from "./components/Person";
+import Persons from "./components/Persons";
+import Filter from "./components/Filter";
+import PersonForm from "./components/PersonForm";
 
 const App = () => {
-  const [ persons, setPersons ] = useState([])
+  const [ persons, setPersons ] = useState([
+      { name: 'Arto Hellas', number: '040-123456' },
+      { name: 'Ada Lovelace', number: '39-44-5323523' },
+      { name: 'Dan Abramov', number: '12-43-234345' },
+      { name: 'Mary Poppendieck', number: '39-23-6423122' }
+  ])
   const [ newName, setNewName ] = useState('')
   const [ number, setNumber ] = useState('')
+  const [ search, setSearch ] = useState('')
+  const filteredList = search === '' ? persons : persons.filter((person) =>
+      ((person.name.toLowerCase().includes(search.toLowerCase())) || (person.number.includes(search))))
 
     const addName = (event) => {
         event.preventDefault()
@@ -23,8 +33,8 @@ const App = () => {
             alert(`${nameObject.number} is already added to phonebook`)
             setNumber('')
         }
-        else if (!nameObject.name) {
-            alert(`You haven't added anything`)
+        else if (!nameObject.name || !nameObject.number) {
+            alert(`Fill name and phone number please`)
         }
         else {
             setPersons(persons.concat(nameObject))
@@ -41,24 +51,18 @@ const App = () => {
       setNumber(event.target.value)
     }
 
+    const inputFilter = (event) => {
+      setSearch(event.target.value)
+    }
+
   return (
       <div>
-        <h2>Phonebook</h2>
-        <form onSubmit={addName}>
-          <div>
-            name: <input value={newName} onChange={nameChange}/>
-          </div>
-          <div>
-              number: <input value={number} onChange={phoneNumber}/>
-          </div>
-          <div>
-            <button type="submit">add</button>
-          </div>
-        </form>
-        <h2>Numbers</h2>
-        <ul>
-            {persons.map((person) => <Person key={person.name} person={person}/>)}
-        </ul>
+          <h2>Phonebook</h2>
+          <Filter search={search} inputFilter={inputFilter}/>
+          <h3>add a new</h3>
+          <PersonForm addName={addName} newName={newName} number={number} nameChange={nameChange} phoneNumber={phoneNumber} />
+          <h3>Numbers</h3>
+          <Persons persons={filteredList}/>
       </div>
   )
 }
