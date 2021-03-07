@@ -15,13 +15,17 @@ useEffect(() => {
   })
 }, [])
 
+    function showButton(name) {
+        setSearch(name)
+    }
+
   return (
       <div className={"App"}>
           <p>find countries
           <input type="search" onChange={event => setSearch(event.target.value)}/>
           </p>
           <div className={"App-header"}>
-          {filteredList.length > 10 ? message : <Countries filteredList={filteredList}/>}
+          {filteredList.length > 10 ? message : <Countries filteredList={filteredList} showButton={showButton}/>}
           </div>
       </div>
   )
