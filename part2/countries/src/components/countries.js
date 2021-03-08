@@ -1,14 +1,14 @@
 import Country from "./country";
 
-const Countries = (props) => {
+const Countries = ({filteredList, showButton}) => {
 
     return (
         <div>
-            {props.filteredList.length === 1 ?
-                <Country filteredList={props.filteredList}/>
+            {filteredList.length === 1 ?
+                <Country filteredList={filteredList}/>
                 :
-                (props.filteredList.map(country => <p key={country.name}>{country.name}
-                <button type={"button"} onClick={() => props.showButton(country.name)}>show</button>
+                (filteredList.map(country => <p key={country.name}>{country.name}
+                <button type={"button"} onClick={() => showButton(country.name)}>show</button>
                 </p>))}
         </div>
     )
