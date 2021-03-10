@@ -4,7 +4,6 @@ import Persons from "./components/Persons";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import noteService from "./services/notes"
-import axios from 'axios'
 
 const App = () => {
   const [ persons, setPersons ] = useState([])
@@ -65,7 +64,7 @@ const App = () => {
           <h3>add a new</h3>
           <PersonForm addName={addName} newName={newName} number={number} nameChange={nameChange} phoneNumber={phoneNumber} />
           <h3>Numbers</h3>
-          <Persons persons={filteredList}/>
+          <Persons persons={filteredList} setPersons={setPersons}/>
       </div>
   )
 }
