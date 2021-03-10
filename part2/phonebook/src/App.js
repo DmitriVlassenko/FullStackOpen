@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Persons from "./components/Persons";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
+import noteService from "./services/notes"
 import axios from 'axios'
 
 const App = () => {
@@ -14,11 +15,7 @@ const App = () => {
       ((person.name.toLowerCase().includes(search.toLowerCase())) || (person.number.includes(search))))
 
     useEffect(() => {
-        axios
-            .get('http://localhost:3001/persons')
-            .then(response => {
-                setPersons(response.data)
-            })
+        noteService.getAll().then(response => setPersons(response))
     }, [])
 
     const addName = (event) => {
@@ -41,9 +38,11 @@ const App = () => {
             alert(`Fill name and phone number please`)
         }
         else {
-            setPersons(persons.concat(nameObject))
-            setNewName('')
-            setNumber('')
+            noteService.create(nameObject).then(response => {
+                setPersons(persons.concat(nameObject))
+                setNewName('')
+                setNumber('')
+            })
         }
     }
 
@@ -60,7 +59,7 @@ const App = () => {
     }
 
   return (
-      <div>
+      <div className={"App"}>
           <h2>Phonebook</h2>
           <Filter search={search} inputFilter={inputFilter}/>
           <h3>add a new</h3>
