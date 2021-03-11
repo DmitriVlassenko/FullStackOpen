@@ -25,9 +25,15 @@ const App = () => {
             date: new Date().toISOString(),
             id: persons.length + 1,
         }
-        if (persons.find((person) => person.name === nameObject.name)) {
-            alert(`${nameObject.name} is already added to phonebook`)
-            setNewName('')
+        const duplicate = persons.find(person => person.name === nameObject.name)
+        if (duplicate) {
+            if (window.confirm(`${nameObject.name} is already added to phonebook, replace the old number with a new one ?`)) {
+                noteService.update(duplicate.id, nameObject).then(response => {
+                    setPersons(persons.map(person => person.id === duplicate.id ? response : person))
+                    setNewName('')
+                    setNumber('')
+                })
+            }
         }
         else if (persons.find((person) => person.number === nameObject.number)) {
             alert(`${nameObject.number} is already added to phonebook`)
@@ -37,7 +43,7 @@ const App = () => {
             alert(`Fill name and phone number please`)
         }
         else {
-            noteService.create(nameObject).then(response => {
+            noteService.create(nameObject).then(() => {
                 setPersons(persons.concat(nameObject))
                 setNewName('')
                 setNumber('')
