@@ -10,6 +10,7 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ number, setNumber ] = useState('')
   const [ search, setSearch ] = useState('')
+  const [ successMessage, setSuccessMessage ] = useState(null)
   const filteredList = search === '' ? persons : persons.filter((person) =>
       ((person.name.toLowerCase().includes(search.toLowerCase())) || (person.number.includes(search))))
 
@@ -32,6 +33,7 @@ const App = () => {
                     setPersons(persons.map(person => person.id === duplicate.id ? response : person))
                     setNewName('')
                     setNumber('')
+                    setSuccessMessage(`${nameObject.name} successfully changed`)
                 })
             }
         }
@@ -47,8 +49,21 @@ const App = () => {
                 setPersons(persons.concat(nameObject))
                 setNewName('')
                 setNumber('')
+                setSuccessMessage(`Added ${nameObject.name}`)
             })
         }
+    }
+
+    const Notification = ({message}) => {
+      if (message === null) {
+          return null
+      }
+        setTimeout(() => {
+            setSuccessMessage(null)
+        }, 5000)
+      return (
+          <div className={"success"}>{message}</div>
+      )
     }
 
     const nameChange = (event) => {
@@ -66,6 +81,7 @@ const App = () => {
   return (
       <div className={"App"}>
           <h2>Phonebook</h2>
+          <Notification message={successMessage}/>
           <Filter search={search} inputFilter={inputFilter}/>
           <h3>add a new</h3>
           <PersonForm addName={addName} newName={newName} number={number} nameChange={nameChange} phoneNumber={phoneNumber} />
