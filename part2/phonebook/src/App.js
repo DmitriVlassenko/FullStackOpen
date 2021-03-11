@@ -10,7 +10,7 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ number, setNumber ] = useState('')
   const [ search, setSearch ] = useState('')
-  const [ successMessage, setSuccessMessage ] = useState(null)
+  const [ message, setMessage ] = useState(null)
   const filteredList = search === '' ? persons : persons.filter((person) =>
       ((person.name.toLowerCase().includes(search.toLowerCase())) || (person.number.includes(search))))
 
@@ -33,7 +33,7 @@ const App = () => {
                     setPersons(persons.map(person => person.id === duplicate.id ? response : person))
                     setNewName('')
                     setNumber('')
-                    setSuccessMessage(`${nameObject.name} successfully changed`)
+                    setMessage(`${nameObject.name} successfully changed`)
                 })
             }
         }
@@ -49,7 +49,7 @@ const App = () => {
                 setPersons(persons.concat(nameObject))
                 setNewName('')
                 setNumber('')
-                setSuccessMessage(`Added ${nameObject.name}`)
+                setMessage(`Added ${nameObject.name}`)
             })
         }
     }
@@ -59,10 +59,15 @@ const App = () => {
           return null
       }
         setTimeout(() => {
-            setSuccessMessage(null)
+            setMessage(null)
         }, 5000)
-      return (
-          <div className={"success"}>{message}</div>
+        if (message.includes("deleted")) {
+            return (
+                <div className={"badError"}>{message}</div>
+            )
+        }
+          return (
+              <div className={"success"}>{message}</div>
       )
     }
 
@@ -81,12 +86,12 @@ const App = () => {
   return (
       <div className={"App"}>
           <h2>Phonebook</h2>
-          <Notification message={successMessage}/>
+          <Notification message={message}/>
           <Filter search={search} inputFilter={inputFilter}/>
           <h3>add a new</h3>
           <PersonForm addName={addName} newName={newName} number={number} nameChange={nameChange} phoneNumber={phoneNumber} />
           <h3>Numbers</h3>
-          <Persons persons={filteredList} setPersons={setPersons}/>
+          <Persons persons={filteredList} setPersons={setPersons} setMessage={setMessage}/>
       </div>
   )
 }
