@@ -2,13 +2,13 @@ const Blog = require('../models/blog')
 
 const initialBlogs = [
     {
-        title: "hi",
+        title: "blog number 1 for testing",
         author: "Dmitri",
         url: "test",
         likes: 5
     },
     {
-        title: "there",
+        title: "blog number 2 for testing",
         author: "Dmitri",
         url: "testing",
         likes: 15
