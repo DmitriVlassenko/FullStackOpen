@@ -3,7 +3,7 @@ const express = require('express')
 require('express-async-errors')
 const app = express()
 const cors = require('cors')
-const blogRouter = require('./controllers/blogNotes')
+const blogsRouter = require('./controllers/blogNotes')
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
@@ -22,12 +22,13 @@ mongoose.connect(config.MONGODB_URI,
     })
 
 app.use(middleware.tokenExtractor)
+app.use(middleware.userExtractor)
 app.use(cors())
 app.use(express.static('build'))
 app.use(express.json())
 app.use(middleware.requestLogger)
 
-app.use('/api/blogs', blogRouter)
+app.use('/api/blogs', middleware.userExtractor, blogsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 
