@@ -1,22 +1,16 @@
 import blogService from "../services/blogs";
 import React, { useState } from 'react'
-
+import Togglable from "./Togglable";
 
 const BlogForm = ({
                     setErrorMessage,
-                    newAuthor,
-                    setNewAuthor,
-                    newTitle,
-                    setNewTitle,
-                    newUrl,
-                    setNewUrl,
                     blogs,
                     setBlogs
                   }) => {
 
-    const [visible, setVisible] = useState(false)
-    const hideWhenVisible = { display: visible ? 'none' : '' }
-    const showWhenVisible = { display: visible ? '' : 'none' }
+    const [newTitle, setNewTitle] = useState('')
+    const [newAuthor, setNewAuthor] = useState('')
+    const [newUrl, setNewUrl] = useState('')
 
     const handleTitle = (event) => {
         setNewTitle(event.target.value)
@@ -42,7 +36,6 @@ const BlogForm = ({
                 setNewAuthor('')
                 setNewTitle('')
                 setNewUrl('')
-                setVisible(false)
                 setErrorMessage('Success')
                 setTimeout(() => {
                     setErrorMessage(null)
@@ -70,13 +63,9 @@ const BlogForm = ({
 
     return (
         <div>
-            <div style={hideWhenVisible}>
-                <button onClick={() => setVisible(true)}>new note</button>
-            </div>
-            <div style={showWhenVisible}>
+            <Togglable buttonLabel='new note'>
                 {blogForm()}
-                <button onClick={() => setVisible(false)}>cancel</button>
-            </div>
+            </Togglable>
         </div>
     )
 }

@@ -7,9 +7,6 @@ import BlogForm from "./components/BlogForm";
 
 const App = () => {
     const [blogs, setBlogs] = useState([])
-    const [newTitle, setNewTitle] = useState('')
-    const [newAuthor, setNewAuthor] = useState('')
-    const [newUrl, setNewUrl] = useState('')
     const [errorMessage, setErrorMessage] = useState(null)
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -64,12 +61,6 @@ const App = () => {
         </p>
 
         <BlogForm
-            newTitle={newTitle}
-            setNewTitle={setNewTitle}
-            newAuthor={newAuthor}
-            setNewAuthor={setNewAuthor}
-            newUrl={newUrl}
-            setNewUrl={setNewUrl}
             blogs={blogs}
             setBlogs={setBlogs}
             setErrorMessage={setErrorMessage}
