@@ -1,5 +1,5 @@
 import blogService from "../services/blogs";
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import Togglable from "./Togglable";
 
 const BlogForm = ({
@@ -8,6 +8,7 @@ const BlogForm = ({
                     setBlogs
                   }) => {
 
+    const visibleRef = useRef()
     const [newTitle, setNewTitle] = useState('')
     const [newAuthor, setNewAuthor] = useState('')
     const [newUrl, setNewUrl] = useState('')
@@ -24,6 +25,7 @@ const BlogForm = ({
 
     const addBlog = (event) => {
         event.preventDefault()
+        visibleRef.current.toggleVisibility()
         const blogObject = {
             title: newTitle,
             author: newAuthor,
@@ -63,7 +65,7 @@ const BlogForm = ({
 
     return (
         <div>
-            <Togglable buttonLabel='new note'>
+            <Togglable buttonLabel='new note' ref={visibleRef}>
                 {blogForm()}
             </Togglable>
         </div>

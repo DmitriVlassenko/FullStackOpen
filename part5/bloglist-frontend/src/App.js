@@ -13,10 +13,11 @@ const App = () => {
     const [user, setUser] = useState(null)
 
     useEffect(() => {
+        console.log('rendered')
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
     )  
-  }, [])
+  }, [errorMessage])
 
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
@@ -36,7 +37,38 @@ const App = () => {
         }, 5000)
     }
 
-  if (user === null) {
+    const updateBlog = async (blogParams) => {
+        try {
+            await blogService.update(blogParams)
+            const updatedBlogs = blogs.map(blog => (blog.id === blogParams.id ? { ...blogParams } : blog))
+            setBlogs(updatedBlogs)
+        } catch (e) {
+            setErrorMessage('unexpected error')
+            setTimeout(() => {
+                setErrorMessage(null)
+            }, 5000)
+        }
+    }
+
+    const removeBlog = async (blogId) => {
+        try {
+            await blogService.remove(blogId)
+            const updatedBlogs = blogs.filter((blog) => (blog.id === blogId ? false : blog))
+            setBlogs(updatedBlogs)
+            setErrorMessage('deleted')
+            setTimeout(() => {
+                setErrorMessage(null)
+            }, 5000)
+        } catch (e) {
+            setErrorMessage('unable to delete')
+            setTimeout(() => {
+                setErrorMessage(null)
+            }, 5000)
+        }
+    }
+
+
+    if (user === null) {
     return (
         <div>
             <LoginForm
@@ -66,8 +98,8 @@ const App = () => {
             setErrorMessage={setErrorMessage}
         />
 
-        {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
+        <Blog key={blog.id} blog={blog} updateBlog={updateBlog} removeBlog={removeBlog} username={user.username} />
       )}
     </div>
   )
