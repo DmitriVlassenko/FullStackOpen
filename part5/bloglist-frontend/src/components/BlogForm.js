@@ -48,14 +48,17 @@ const BlogForm = ({
     const blogForm = () => (
         <form onSubmit={addBlog}>
             title: <input
+            id={'title'}
             value={newTitle}
             onChange={handleTitle}
         /><br/>
             author: <input
+            id={'author'}
             value={newAuthor}
             onChange={handleAuthor}
         /><br/>
             url: <input
+            id={'url'}
             value={newUrl}
             onChange={handleUrl}
         /><br/>
@@ -64,7 +67,7 @@ const BlogForm = ({
     )
 
     return (
-        <div>
+        <div className={'BlogForm'}>
             <Togglable buttonLabel='new note' ref={visibleRef}>
                 {blogForm()}
             </Togglable>

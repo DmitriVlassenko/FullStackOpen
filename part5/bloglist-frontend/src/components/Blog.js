@@ -22,14 +22,13 @@ const Blog = ({blog, updateBlog, removeBlog, username}) => {
   }
 
   return (
-        <div style={blogStyle}>
-          {blog.title}
+        <div className={'blog'} style={blogStyle}>
+          {blog.title} {blog.author}
           <Togglable buttonLabel="view" ref={visibleRef}>
             <p>{blog.url}</p>
             <p>Likes {blog.likes}
               <button onClick={likeBlog}>like</button>
             </p>
-            <p>{blog.author}</p>
             {blog.user.username === username && (
                 <button onClick={deleteBlog}>remove</button>)}
           </Togglable>
