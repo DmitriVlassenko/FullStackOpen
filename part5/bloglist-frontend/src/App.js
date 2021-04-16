@@ -88,7 +88,7 @@ const App = () => {
 
         <h2>blogs</h2>
         <p>{user.name} logged in
-            <button type={"button"} onClick={logout}>logout</button>
+            <button id={'logout-button'} type={"button"} onClick={logout}>logout</button>
         </p>
 
         <BlogForm
@@ -96,10 +96,11 @@ const App = () => {
             setBlogs={setBlogs}
             setErrorMessage={setErrorMessage}
         />
-
+        <div id={'blogsList'}>
         {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
         <Blog key={blog.id} blog={blog} updateBlog={updateBlog} removeBlog={removeBlog} username={user.username} />
       )}
+        </div>
     </div>
   )
 }

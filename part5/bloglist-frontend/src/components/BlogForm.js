@@ -62,13 +62,13 @@ const BlogForm = ({
             value={newUrl}
             onChange={handleUrl}
         /><br/>
-            <button type="submit">create</button>
+            <button id={'create-button'} type="submit">create</button>
         </form>
     )
 
     return (
         <div className={'BlogForm'}>
-            <Togglable buttonLabel='new note' ref={visibleRef}>
+            <Togglable buttonLabel='new blog' ref={visibleRef}>
                 {blogForm()}
             </Togglable>
         </div>

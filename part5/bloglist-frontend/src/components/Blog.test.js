@@ -53,3 +53,22 @@ describe('Blog tests', () => {
         expect(mockHandler.mock.calls).toHaveLength(2)
     })
 })
+
+test('BlogForm test', () => {
+    const createBlog = jest.fn()
+
+    const component = render(
+        <BlogForm createNote={createNote} />
+    )
+
+    const input = component.container.querySelector('input')
+    const form = component.container.querySelector('form')
+
+    fireEvent.change(input, {
+        target: { value: 'testing of forms could be easier' }
+    })
+    fireEvent.submit(form)
+
+    expect(createNote.mock.calls).toHaveLength(1)
+    expect(createNote.mock.calls[0][0].content).toBe('testing of forms could be easier' )
+})
