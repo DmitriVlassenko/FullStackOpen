@@ -1,6 +1,7 @@
-import Notification from "./Notification";
-import loginService from "../services/login";
-import blogService from "../services/blogs";
+import Notification from "./Notification"
+import loginService from "../services/login"
+import blogService from "../services/blogs"
+import PropTypes from 'prop-types'
 
 const LoginForm = ({
                        setUsername,
@@ -11,6 +12,11 @@ const LoginForm = ({
                        setErrorMessage,
                        setUser
                    }) => {
+
+    LoginForm.propTypes = {
+        username: PropTypes.string.isRequired,
+        password: PropTypes.string.isRequired
+    }
 
     const handleLogin = async (event) => {
         event.preventDefault()

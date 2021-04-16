@@ -13,7 +13,6 @@ const App = () => {
     const [user, setUser] = useState(null)
 
     useEffect(() => {
-        console.log('rendered')
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
     )  
