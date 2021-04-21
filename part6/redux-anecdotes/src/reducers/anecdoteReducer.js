@@ -6,11 +6,6 @@ const mainReducer = (state = [], action) => {
       return [...state, action.data]
     case 'VOTE':
       const id = action.data.id
-      // const anecdoteVote = state.find(v => v.id === id)
-      // const votedAnecdote = {
-      //   ...anecdoteVote,
-      //   votes: anecdoteVote.votes + 1
-      // }
       return state.map(anecdote => anecdote.id !== id ? anecdote : action.data)
     case 'INIT_ANECDOTES':
       return action.data
@@ -18,13 +13,6 @@ const mainReducer = (state = [], action) => {
       return state
   }
 }
-
-// export const newAnecdote = (content) => {
-//   return {
-//     type: 'NEW_ANECDOTE',
-//     content
-//   }
-// }
 
 export const newAnecdote = (content) => {
   return async dispatch => {
@@ -36,13 +24,6 @@ export const newAnecdote = (content) => {
   }
 }
 
-// export const anecdoteVote = (id) => {
-//   return {
-//     type: 'VOTE',
-//     data: { id }
-//   }
-// }
-
 export const anecdoteVote = (anecdote) => {
   return async dispatch => {
     const votedAnecdote = { ...anecdote, votes: anecdote.votes + 1 }
@@ -53,13 +34,6 @@ export const anecdoteVote = (anecdote) => {
     })
   }
 }
-
-// export const initializeAnecdotes = (anecdotes) => {
-//   return {
-//     type: 'INIT_ANECDOTES',
-//     data: anecdotes,
-//   }
-// }
 
 export const initializeAnecdotes = () => {
   return async dispatch => {
