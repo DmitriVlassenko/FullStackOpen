@@ -1,1 +1,1 @@
-# FullStackOpen in progress
+# FullStackOpen solutions
